@@ -1,30 +1,43 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import { onMount } from 'svelte';
-	import { bookshelf } from '$lib/stores/bookshelf';
 	import type { Book } from '$lib/types';
 
-	type OpenLibraryDoc = {
-		key: string;
-		title: string;
-		author_name?: string[];
-		cover_i?: number;
+	type GoogleBookItem = {
+		id: string;
+		volumeInfo?: {
+			title?: string;
+			authors?: string[];
+			description?: string;
+			imageLinks?: {
+				smallThumbnail?: string;
+				thumbnail?: string;
+			};
+		};
 	};
 
-	let query = $state('fiction');
+	let query = $state('subject:fiction');
 	let books = $state<Book[]>([]);
 	let isLoading = $state(false);
 	let error = $state('');
 	let favoriteIds = $state<string[]>([]);
 
-	function mapBook(doc: OpenLibraryDoc): Book {
+	const quickSearches = [
+		{ label: 'Fiction', query: 'subject:fiction' },
+		{ label: 'Fantasy', query: 'subject:fantasy' },
+		{ label: 'Romance', query: 'subject:romance' },
+		{ label: 'Mystery', query: 'subject:mystery' }
+	] as const;
+
+	function mapBook(item: GoogleBookItem): Book {
+		const info = item.volumeInfo;
+
 		return {
-			id: doc.key,
-			title: doc.title,
-			author: doc.author_name?.[0] ?? 'Unknown author',
-			coverUrl: doc.cover_i
-				? `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
-				: null,
-			description: ''
+			id: item.id,
+			title: info?.title ?? 'Untitled',
+			author: info?.authors?.[0] ?? 'Unknown author',
+			coverUrl: info?.imageLinks?.thumbnail ?? info?.imageLinks?.smallThumbnail ?? null,
+			description: info?.description ?? ''
 		};
 	}
 
@@ -33,16 +46,14 @@
 		error = '';
 
 		try {
-			const response = await fetch(
-				`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}`
-			);
+			const response = await fetch(`/api/books/search?q=${encodeURIComponent(query)}`);
 
 			if (!response.ok) {
 				throw new Error('Search failed');
 			}
 
 			const data = await response.json();
-			books = data.docs.slice(0, 12).map(mapBook);
+			books = (data.items ?? []).map(mapBook);
 		} catch {
 			error = 'Could not load books right now.';
 			books = [];
@@ -57,6 +68,11 @@
 			: [...favoriteIds, bookId];
 	}
 
+	function runQuickSearch(nextQuery: string) {
+		query = nextQuery;
+		searchBooks();
+	}
+
 	onMount(searchBooks);
 </script>
 
@@ -66,18 +82,11 @@
 
 <div class="min-h-screen bg-stone-100 text-stone-900">
 	<div class="mx-auto max-w-6xl px-6 py-10">
-		<div class="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-			<div>
-				<p class="mb-2 text-sm font-semibold uppercase tracking-[0.25em] text-amber-700">
-					Book Discovery
-				</p>
-				<h1 class="text-4xl font-bold tracking-tight">Find books and build your shelf</h1>
-			</div>
-
-			<div class="rounded-2xl bg-white px-4 py-3 shadow-sm ring-1 ring-stone-200">
-				<p class="text-xs uppercase tracking-[0.2em] text-stone-500">Saved so far</p>
-				<p class="text-3xl font-bold">{$bookshelf.length}</p>
-			</div>
+		<div class="mb-8">
+			<p class="mb-2 text-sm font-semibold uppercase tracking-[0.25em] text-amber-700">
+				Book Discovery
+			</p>
+			<h1 class="text-4xl font-bold tracking-tight">Find books and explore details</h1>
 		</div>
 
 		<form class="mb-8 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-stone-200" onsubmit={(event) => {
@@ -90,7 +99,7 @@
 					id="search"
 					bind:value={query}
 					class="w-full rounded-2xl border border-stone-300 bg-stone-50 px-4 py-3 outline-none transition focus:border-amber-600"
-					placeholder="Try The Hobbit or Jane Austen"
+					placeholder="Try subject:fiction or your favorite author"
 				/>
 				<button
 					type="submit"
@@ -98,6 +107,18 @@
 				>
 					Search
 				</button>
+			</div>
+
+			<div class="mt-4 flex flex-wrap gap-2">
+				{#each quickSearches as item (item.query)}
+					<button
+						type="button"
+						class="rounded-full border border-stone-300 bg-stone-50 px-4 py-2 text-sm font-medium text-stone-700 transition hover:border-amber-700 hover:text-amber-700"
+						onclick={() => runQuickSearch(item.query)}
+					>
+						{item.label}
+					</button>
+				{/each}
 			</div>
 		</form>
 
@@ -144,12 +165,12 @@
 								<p class="text-sm text-stone-600">{book.author}</p>
 							</div>
 
-							<button
-								class="w-full rounded-2xl border border-stone-300 px-4 py-2 text-sm font-medium transition hover:border-amber-700 hover:text-amber-700"
-								onclick={() => bookshelf.toggle(book)}
+							<a
+								href={resolve('/book/[id]', { id: book.id })}
+								class="block w-full rounded-2xl border border-stone-300 px-4 py-2 text-center text-sm font-medium transition hover:border-amber-700 hover:text-amber-700"
 							>
-								{$bookshelf.some((savedBook) => savedBook.id === book.id) ? 'Remove from shelf' : 'Save to shelf'}
-							</button>
+								See more details
+							</a>
 						</div>
 					</div>
 				{/each}
