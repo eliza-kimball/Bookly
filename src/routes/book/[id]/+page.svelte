@@ -2,15 +2,46 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { onMount } from 'svelte';
+	import { bookshelf } from '$lib/stores/bookshelf';
+	import type { Book } from '$lib/types';
 
 	let title = $state('');
 	let author = $state('');
 	let coverUrl = $state('');
 	let description = $state('Loading description...');
 	let isLoading = $state(true);
+	let selectedShelfId = $state('');
 
 	function stripHtml(html: string) {
 		return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+	}
+
+	function currentBook(): Book {
+		return {
+			id: page.params.id ?? '',
+			title,
+			author,
+			coverUrl: coverUrl || null,
+			description
+		};
+	}
+
+	function addCurrentBookToShelf() {
+		if (!selectedShelfId || !page.params.id) {
+			return;
+		}
+
+		bookshelf.addBookToShelf(currentBook(), selectedShelfId);
+	}
+
+	function selectedShelfContainsCurrentBook() {
+		if (!selectedShelfId || !page.params.id) {
+			return false;
+		}
+
+		return $bookshelf.books.some(
+			(book) => book.id === page.params.id && book.shelfIds.includes(selectedShelfId)
+		);
 	}
 
 	async function loadBookDetails() {
@@ -49,7 +80,10 @@
 		}
 	}
 
-	onMount(loadBookDetails);
+	onMount(() => {
+		selectedShelfId = $bookshelf.shelves[0]?.id ?? '';
+		loadBookDetails();
+	});
 </script>
 
 <svelte:head>
@@ -70,6 +104,42 @@
 			<p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-700">Book Details</p>
 			<h1 class="mt-2 text-4xl font-bold tracking-tight">{title}</h1>
 			<p class="mt-3 text-lg text-stone-600">{author}</p>
+
+			<div class="mt-6 rounded-3xl bg-stone-50 p-6">
+				<h2 class="text-sm font-semibold uppercase tracking-[0.18em] text-stone-500">Add To Shelf</h2>
+
+				{#if $bookshelf.shelves.length > 0}
+					<div class="mt-4 space-y-3">
+						<select
+							class="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none transition focus:border-amber-600"
+							bind:value={selectedShelfId}
+						>
+							{#each $bookshelf.shelves as shelf (shelf.id)}
+								<option value={shelf.id}>{shelf.name}</option>
+							{/each}
+						</select>
+
+						<button
+							type="button"
+							class={`w-full rounded-2xl border px-4 py-3 text-sm font-medium transition ${
+								selectedShelfContainsCurrentBook()
+									? 'border-amber-700 bg-amber-50 text-amber-800'
+									: 'border-stone-300 hover:border-amber-700 hover:text-amber-700'
+							}`}
+							onclick={addCurrentBookToShelf}
+						>
+							{selectedShelfContainsCurrentBook() ? 'Added to shelf' : 'Add to shelf'}
+						</button>
+					</div>
+				{:else}
+					<a
+						href={resolve('/my-books')}
+						class="mt-4 block rounded-2xl border border-dashed border-stone-300 px-4 py-3 text-center text-sm font-medium transition hover:border-amber-700 hover:text-amber-700"
+					>
+						Create a shelf first
+					</a>
+				{/if}
+			</div>
 
 			<div class="mt-8 rounded-3xl bg-stone-50 p-6">
 				<h2 class="text-sm font-semibold uppercase tracking-[0.18em] text-stone-500">Description</h2>

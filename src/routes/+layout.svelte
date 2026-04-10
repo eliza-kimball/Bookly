@@ -19,7 +19,6 @@
 		<aside class="border-b border-stone-200 bg-white lg:sticky lg:top-0 lg:h-screen lg:w-72 lg:border-b-0 lg:border-r">
 			<div class="px-6 py-6">
 				<p class="text-xs font-semibold uppercase tracking-[0.28em] text-amber-700">Bookly</p>
-				<h1 class="mt-2 text-2xl font-bold tracking-tight">Your reading space</h1>
 			</div>
 
 			<nav class="px-4 pb-6">
