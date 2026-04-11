@@ -16,7 +16,7 @@ Bookly is a personal book discovery and bookshelf organizer built with SvelteKit
 
 ## Framework Choice
 
-This project uses **SvelteKit** as its JavaScript framework.
+This project uses SvelteKit as its JavaScript framework.
 
 I chose SvelteKit because it makes it easier to build interactive user interfaces without a lot of extra code. It works well for this project because the app needs search, dynamic rendering, multiple pages, local state management, and reusable UI components. SvelteKit also provides a clean routing system, which made it straightforward to build separate pages for the home screen, book details, shelves, and favorites.
 

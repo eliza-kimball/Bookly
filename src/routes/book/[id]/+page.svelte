@@ -101,7 +101,7 @@
 		</div>
 
 		<div>
-			<p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-700">Book Details</p>
+			<p class="text-brand text-xs font-semibold uppercase tracking-[0.24em]">Book Details</p>
 			<h1 class="mt-2 text-4xl font-bold tracking-tight">{title}</h1>
 			<p class="mt-3 text-lg text-stone-600">{author}</p>
 
@@ -111,7 +111,7 @@
 				{#if $bookshelf.shelves.length > 0}
 					<div class="mt-4 space-y-3">
 						<select
-							class="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none transition focus:border-amber-600"
+							class="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none transition focus:border-brand"
 							bind:value={selectedShelfId}
 						>
 							{#each $bookshelf.shelves as shelf (shelf.id)}
@@ -123,8 +123,8 @@
 							type="button"
 							class={`w-full rounded-2xl border px-4 py-3 text-sm font-medium transition ${
 								selectedShelfContainsCurrentBook()
-									? 'border-amber-700 bg-amber-50 text-amber-800'
-									: 'border-stone-300 hover:border-amber-700 hover:text-amber-700'
+									? 'border-brand bg-brand-soft text-brand-deep'
+									: 'border-stone-300 hover:border-brand hover:text-brand'
 							}`}
 							onclick={addCurrentBookToShelf}
 						>
@@ -134,7 +134,7 @@
 				{:else}
 					<a
 						href={resolve('/my-books')}
-						class="mt-4 block rounded-2xl border border-dashed border-stone-300 px-4 py-3 text-center text-sm font-medium transition hover:border-amber-700 hover:text-amber-700"
+						class="mt-4 block rounded-2xl border border-dashed border-stone-300 px-4 py-3 text-center text-sm font-medium transition hover:border-brand hover:text-brand"
 					>
 						Create a shelf first
 					</a>
@@ -152,7 +152,7 @@
 
 			<a
 				href={resolve('/')}
-				class="mt-6 inline-block rounded-2xl border border-stone-300 px-4 py-2 text-sm font-medium transition hover:border-amber-700 hover:text-amber-700"
+				class="mt-6 inline-block rounded-2xl border border-stone-300 px-4 py-2 text-sm font-medium transition hover:border-brand hover:text-brand"
 			>
 				Back to search
 			</a>

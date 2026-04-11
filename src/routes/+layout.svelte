@@ -19,7 +19,7 @@
 		<aside class="min-h-screen border-b border-stone-200 bg-white lg:w-72 lg:shrink-0 lg:self-stretch lg:border-b-0 lg:border-r">
 			<div class="lg:sticky lg:top-0 lg:h-screen">
 				<div class="px-6 py-6">
-					<p class="text-xs font-semibold uppercase tracking-[0.28em] text-amber-700">Bookly</p>
+					<p class="text-brand text-xs font-semibold uppercase tracking-[0.28em]">Bookly</p>
 				</div>
 
 				<nav class="px-4 pb-6">
@@ -30,8 +30,8 @@
 									href={resolve(item.href)}
 									class={`block rounded-2xl px-4 py-3 text-sm font-medium transition ${
 										page.url.pathname === item.href
-											? 'bg-amber-700 text-white'
-											: 'text-stone-700 hover:bg-stone-100'
+										? 'bg-brand text-white'
+										: 'text-stone-700 hover:bg-stone-100'
 									}`}
 								>
 									{item.label}

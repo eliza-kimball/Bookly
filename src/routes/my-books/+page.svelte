@@ -17,7 +17,7 @@
 <div class="px-6 py-10">
 	<div class="mx-auto max-w-6xl space-y-8">
 		<div class="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-stone-200">
-			<p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-700">My Books</p>
+			<p class="text-brand text-xs font-semibold uppercase tracking-[0.24em]">My Books</p>
 			<h1 class="mt-2 text-3xl font-bold tracking-tight">Build your shelves</h1>
 			<p class="mt-3 max-w-2xl text-sm text-stone-600">
 				Create custom shelves, then add books to them from the home page.
@@ -36,12 +36,12 @@
 				<input
 					id="new-shelf"
 					bind:value={newShelfName}
-					class="w-full rounded-2xl border border-stone-300 bg-stone-50 px-4 py-3 outline-none transition focus:border-amber-600"
+					class="w-full rounded-2xl border border-stone-300 bg-stone-50 px-4 py-3 outline-none transition focus:border-brand"
 					placeholder="Favorites, Summer Reads, Fantasy TBR..."
 				/>
 				<button
 					type="submit"
-					class="rounded-2xl bg-amber-700 px-5 py-3 font-semibold text-white transition hover:bg-amber-800"
+					class="bg-brand hover:bg-brand-deep rounded-2xl px-5 py-3 font-semibold text-white transition"
 				>
 					Create shelf
 				</button>
@@ -63,7 +63,7 @@
 					<section class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-stone-200">
 						<div class="mb-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
 							<div>
-								<p class="text-xs font-semibold uppercase tracking-[0.22em] text-amber-700">
+								<p class="text-brand text-xs font-semibold uppercase tracking-[0.22em]">
 									Shelf
 								</p>
 								<h2 class="mt-1 text-2xl font-bold tracking-tight">{shelf.name}</h2>
@@ -93,8 +93,8 @@
 												aria-label={`Favorite ${book.title}`}
 												class={`absolute top-3 right-3 z-10 flex h-10 w-10 items-center justify-center rounded-full shadow-sm ring-1 transition ${
 													$favorites.some((favoriteBook) => favoriteBook.id === book.id)
-														? 'bg-amber-700 text-white ring-amber-700'
-														: 'bg-white/95 text-amber-700 ring-stone-200 hover:bg-amber-50'
+														? 'bg-favorite text-white ring-favorite'
+														: 'text-favorite bg-white/95 ring-stone-200 hover:bg-favorite-soft'
 												}`}
 												onclick={() => favorites.toggle(book)}
 											>

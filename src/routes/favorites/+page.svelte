@@ -10,7 +10,7 @@
 <div class="px-6 py-10">
 	<div class="mx-auto max-w-6xl space-y-8">
 		<div class="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-stone-200">
-			<p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-700">Favorites</p>
+			<p class="text-brand text-xs font-semibold uppercase tracking-[0.24em]">Favorites</p>
 			<h1 class="mt-2 text-3xl font-bold tracking-tight">Your favorite books</h1>
 			<p class="mt-3 max-w-2xl text-sm text-stone-600">
 				Books you heart on the home page or shelves will appear here.
@@ -32,7 +32,7 @@
 							<button
 								type="button"
 								aria-label={`Remove ${book.title} from favorites`}
-								class="absolute top-3 right-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-amber-700 text-white shadow-sm ring-1 ring-amber-700 transition"
+								class="bg-favorite ring-favorite absolute top-3 right-3 z-10 flex h-10 w-10 items-center justify-center rounded-full text-white shadow-sm ring-1 transition"
 								onclick={() => favorites.toggle(book)}
 							>
 								<span class="text-lg leading-none">♥</span>
@@ -65,7 +65,7 @@
 
 							<a
 								href={resolve('/book/[id]', { id: book.id })}
-								class="block w-full rounded-2xl border border-stone-300 px-4 py-2 text-center text-sm font-medium transition hover:border-amber-700 hover:text-amber-700"
+								class="block w-full rounded-2xl border border-stone-300 px-4 py-2 text-center text-sm font-medium transition hover:border-brand hover:text-brand"
 							>
 								See more details
 							</a>

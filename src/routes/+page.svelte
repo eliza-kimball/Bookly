@@ -112,7 +112,7 @@
 <div class="min-h-screen bg-stone-100 text-stone-900">
 	<div class="mx-auto max-w-6xl px-6 py-10">
 		<div class="mb-8">
-			<p class="mb-2 text-sm font-semibold uppercase tracking-[0.25em] text-amber-700">
+			<p class="text-brand mb-2 text-sm font-semibold uppercase tracking-[0.25em]">
 				Book Discovery
 			</p>
 			<h1 class="text-4xl font-bold tracking-tight">Find books and explore details</h1>
@@ -127,12 +127,12 @@
 				<input
 					id="search"
 					bind:value={query}
-					class="w-full rounded-2xl border border-stone-300 bg-stone-50 px-4 py-3 outline-none transition focus:border-amber-600"
+					class="w-full rounded-2xl border border-stone-300 bg-stone-50 px-4 py-3 outline-none transition focus:border-brand"
 					placeholder="Try subject:fiction or your favorite author"
 				/>
 				<button
 					type="submit"
-					class="rounded-2xl bg-amber-700 px-5 py-3 font-semibold text-white transition hover:bg-amber-800"
+					class="bg-brand hover:bg-brand-deep rounded-2xl px-5 py-3 font-semibold text-white transition"
 				>
 					Search
 				</button>
@@ -142,7 +142,7 @@
 				{#each quickSearches as item (item.query)}
 					<button
 						type="button"
-						class="rounded-full border border-stone-300 bg-stone-50 px-4 py-2 text-sm font-medium text-stone-700 transition hover:border-amber-700 hover:text-amber-700"
+						class="rounded-full border border-stone-300 bg-stone-50 px-4 py-2 text-sm font-medium text-stone-700 transition hover:border-brand hover:text-brand"
 						onclick={() => runQuickSearch(item.query)}
 					>
 						{item.label}
@@ -165,8 +165,8 @@
 								aria-label={`Favorite ${book.title}`}
 								class={`absolute top-3 right-3 z-10 flex h-10 w-10 items-center justify-center rounded-full shadow-sm ring-1 transition ${
 									$favorites.some((favoriteBook) => favoriteBook.id === book.id)
-										? 'bg-amber-700 text-white ring-amber-700'
-										: 'bg-white/95 text-amber-700 ring-stone-200 hover:bg-amber-50'
+										? 'bg-favorite text-white ring-favorite'
+										: 'text-favorite bg-white/95 ring-stone-200 hover:bg-favorite-soft'
 								}`}
 								onclick={() => favorites.toggle(book)}
 							>
@@ -204,7 +204,7 @@
 								{#if $bookshelf.shelves.length > 0}
 									<div class="space-y-2">
 									<select
-										class="w-full rounded-2xl border border-stone-300 bg-stone-50 px-4 py-2 text-sm outline-none transition focus:border-amber-600"
+										class="w-full rounded-2xl border border-stone-300 bg-stone-50 px-4 py-2 text-sm outline-none transition focus:border-brand"
 										value={getSelectedShelf(book.id)}
 										onchange={(event) =>
 											selectShelf(book.id, (event.currentTarget as HTMLSelectElement).value)}
@@ -218,8 +218,8 @@
 										type="button"
 										class={`w-full rounded-2xl border px-4 py-2 text-sm font-medium transition ${
 											selectedShelfContainsBook(book.id)
-												? 'border-amber-700 bg-amber-50 text-amber-800'
-												: 'border-stone-300 hover:border-amber-700 hover:text-amber-700'
+												? 'border-brand bg-brand-soft text-brand-deep'
+												: 'border-stone-300 hover:border-brand hover:text-brand'
 										}`}
 										onclick={() => addBookToSelectedShelf(book)}
 									>
@@ -229,7 +229,7 @@
 								{:else}
 									<a
 										href={resolve('/my-books')}
-										class="block w-full rounded-2xl border border-dashed border-stone-300 px-4 py-2 text-center text-sm font-medium transition hover:border-amber-700 hover:text-amber-700"
+										class="block w-full rounded-2xl border border-dashed border-stone-300 px-4 py-2 text-center text-sm font-medium transition hover:border-brand hover:text-brand"
 									>
 										Create a shelf first
 									</a>
@@ -237,7 +237,7 @@
 
 								<a
 									href={resolve('/book/[id]', { id: book.id })}
-									class="block w-full rounded-2xl border border-stone-300 px-4 py-2 text-center text-sm font-medium transition hover:border-amber-700 hover:text-amber-700"
+									class="block w-full rounded-2xl border border-stone-300 px-4 py-2 text-center text-sm font-medium transition hover:border-brand hover:text-brand"
 								>
 									See more details
 								</a>

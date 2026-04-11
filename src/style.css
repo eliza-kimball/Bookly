@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@theme {
+	--color-brand: #105666;
+	--color-brand-soft: #d7e8eb;
+	--color-brand-deep: #0b4652;
+	--color-favorite: #c85555;
+	--color-favorite-soft: #f3dddd;
+}
+
 @import '@skeletonlabs/skeleton'; 
 @import '@skeletonlabs/skeleton-svelte'; 
 @import '@skeletonlabs/skeleton/themes/cerberus'; 
