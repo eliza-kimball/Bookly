@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-	<title>Favorites | SupaProBook</title>
+	<title>Favorites | Bookly</title>
 </svelte:head>
 
 <div class="px-6 py-10">

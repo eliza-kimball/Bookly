@@ -87,7 +87,7 @@
 </script>
 
 <svelte:head>
-	<title>{title ? `${title} | SupaProBook` : 'Book Details | SupaProBook'}</title>
+	<title>{title ? `${title} | Bookly` : 'Book Details | Bookly'}</title>
 </svelte:head>
 
 <div class="px-6 py-10">

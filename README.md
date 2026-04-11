@@ -1,42 +1,57 @@
-# sv
+# Bookly
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Bookly is a personal book discovery and bookshelf organizer built with SvelteKit and Tailwind CSS. Users can search for books, view book details, save books to custom shelves, and mark favorites.
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- Search for books by title, author, or subject using the Google Books API
+- Browse quick search categories such as Fiction, Fantasy, Romance, and Mystery
+- View a details page for each book with cover, author, and description
+- Create custom shelves on the `My Books` page
+- Add books to different shelves from the home page or the details page
+- Remove books from shelves
+- Mark and unmark favorite books with a heart button
+- View all favorite books on the `Favorites` page
+- Keep shelves and favorites saved in local storage
+
+## Framework Choice
+
+This project uses **SvelteKit** as its JavaScript framework.
+
+I chose SvelteKit because it makes it easier to build interactive user interfaces without a lot of extra code. It works well for this project because the app needs search, dynamic rendering, multiple pages, local state management, and reusable UI components. SvelteKit also provides a clean routing system, which made it straightforward to build separate pages for the home screen, book details, shelves, and favorites.
+
+## Tech Stack
+
+- SvelteKit
+- Svelte
+- Tailwind CSS
+- TypeScript
+- Google Books API
+
+## Run Locally
+
+Install dependencies:
 
 ```sh
-# create a new project
-npx sv create my-app
+npm install
 ```
 
-To recreate this project with the same configuration:
-
-```sh
-# recreate this project
-npx sv@0.12.4 create --template minimal --types ts --add prettier eslint --install npm ./
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Start the development server:
 
 ```sh
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+## Build
 
-To create a production version of your app:
+Create a production build:
 
 ```sh
 npm run build
 ```
 
-You can preview the production build with `npm run preview`.
+Preview the production build:
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+```sh
+npm run preview
+```

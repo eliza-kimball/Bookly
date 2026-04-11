@@ -106,7 +106,7 @@
 </script>
 
 <svelte:head>
-	<title>SupaProBook</title>
+	<title>Bookly</title>
 </svelte:head>
 
 <div class="min-h-screen bg-stone-100 text-stone-900">

@@ -11,7 +11,7 @@
 </script>
 
 <svelte:head>
-	<title>My Books | SupaProBook</title>
+	<title>My Books | Bookly</title>
 </svelte:head>
 
 <div class="px-6 py-10">
