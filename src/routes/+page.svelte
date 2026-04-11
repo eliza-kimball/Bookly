@@ -23,6 +23,7 @@
 	let isLoading = $state(false);
 	let error = $state('');
 	let selectedShelfByBook = $state<Record<string, string>>({});
+	const SEARCH_STATE_KEY = 'bookly-search-state';
 
 	const quickSearches = [
 		{ label: 'Fiction', query: 'subject:fiction' },
@@ -56,6 +57,13 @@
 
 			const data = await response.json();
 			books = (data.items ?? []).map(mapBook);
+			sessionStorage.setItem(
+				SEARCH_STATE_KEY,
+				JSON.stringify({
+					query,
+					books
+				})
+			);
 		} catch {
 			error = 'Could not load books right now.';
 			books = [];
@@ -102,7 +110,26 @@
 		);
 	}
 
-	onMount(searchBooks);
+	onMount(() => {
+		const savedSearch = sessionStorage.getItem(SEARCH_STATE_KEY);
+
+		if (savedSearch) {
+			try {
+				const parsed = JSON.parse(savedSearch) as { query?: string; books?: Book[] };
+
+				if (parsed.query && Array.isArray(parsed.books) && parsed.books.length > 0) {
+					query = parsed.query;
+					books = parsed.books;
+					isLoading = false;
+					return;
+				}
+			} catch {
+				sessionStorage.removeItem(SEARCH_STATE_KEY);
+			}
+		}
+
+		searchBooks();
+	});
 </script>
 
 <svelte:head>

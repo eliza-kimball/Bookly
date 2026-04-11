@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import { bookshelf } from '$lib/stores/bookshelf';
 	import { favorites } from '$lib/stores/favorites';
 
@@ -103,15 +104,21 @@
 												</span>
 											</button>
 
-											{#if book.coverUrl}
-												<img
-													class="max-h-full max-w-full object-contain shadow-sm"
-													src={book.coverUrl}
-													alt={book.title}
-												/>
-											{:else}
-												<div class="text-center text-sm text-stone-500">No cover available</div>
-											{/if}
+											<a
+												href={resolve('/book/[id]', { id: book.id })}
+												class="flex h-full w-full items-center justify-center"
+												aria-label={`See details for ${book.title}`}
+											>
+												{#if book.coverUrl}
+													<img
+														class="max-h-full max-w-full object-contain shadow-sm"
+														src={book.coverUrl}
+														alt={book.title}
+													/>
+												{:else}
+													<div class="text-center text-sm text-stone-500">No cover available</div>
+												{/if}
+											</a>
 										</div>
 
 										<div class="space-y-3 p-4">
@@ -119,6 +126,13 @@
 												<h3 class="line-clamp-2 text-lg font-semibold">{book.title}</h3>
 												<p class="text-sm text-stone-600">{book.author}</p>
 											</div>
+
+											<a
+												href={resolve('/book/[id]', { id: book.id })}
+												class="block w-full rounded-2xl border border-stone-300 px-4 py-2 text-center text-sm font-medium transition hover:border-brand hover:text-brand"
+											>
+												See more details
+											</a>
 
 											<button
 												type="button"

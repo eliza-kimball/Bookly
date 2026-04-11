@@ -91,57 +91,71 @@
 </svelte:head>
 
 <div class="px-6 py-10">
-	<div class="mx-auto grid max-w-5xl gap-8 rounded-3xl bg-white p-8 shadow-sm ring-1 ring-stone-200 lg:grid-cols-[260px_1fr]">
-		<div class="flex min-h-80 items-center justify-center rounded-3xl bg-stone-100 p-6">
-			{#if coverUrl}
-				<img class="max-h-full max-w-full object-contain shadow-sm" src={coverUrl} alt={title} />
-			{:else}
-				<div class="text-center text-sm text-stone-500">No cover available</div>
-			{/if}
-		</div>
+	<div class="mx-auto mb-4 max-w-5xl">
+		<a
+			href={resolve('/')}
+			class="text-brand inline-flex items-center gap-2 text-sm font-medium transition hover:text-brand-deep"
+		>
+			<span aria-hidden="true">←</span>
+			<span>Back to search</span>
+		</a>
+	</div>
 
-		<div>
-			<p class="text-brand text-xs font-semibold uppercase tracking-[0.24em]">Book Details</p>
-			<h1 class="mt-2 text-4xl font-bold tracking-tight">{title}</h1>
-			<p class="mt-3 text-lg text-stone-600">{author}</p>
-
-			<div class="mt-6 rounded-3xl bg-stone-50 p-6">
-				<h2 class="text-sm font-semibold uppercase tracking-[0.18em] text-stone-500">Add To Shelf</h2>
-
-				{#if $bookshelf.shelves.length > 0}
-					<div class="mt-4 space-y-3">
-						<select
-							class="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none transition focus:border-brand"
-							bind:value={selectedShelfId}
-						>
-							{#each $bookshelf.shelves as shelf (shelf.id)}
-								<option value={shelf.id}>{shelf.name}</option>
-							{/each}
-						</select>
-
-						<button
-							type="button"
-							class={`w-full rounded-2xl border px-4 py-3 text-sm font-medium transition ${
-								selectedShelfContainsCurrentBook()
-									? 'border-brand bg-brand-soft text-brand-deep'
-									: 'border-stone-300 hover:border-brand hover:text-brand'
-							}`}
-							onclick={addCurrentBookToShelf}
-						>
-							{selectedShelfContainsCurrentBook() ? 'Added to shelf' : 'Add to shelf'}
-						</button>
-					</div>
+	<div class="mx-auto max-w-5xl rounded-3xl bg-white p-8 shadow-sm ring-1 ring-stone-200">
+		<div class="grid gap-8 lg:grid-cols-[420px_1fr]">
+			<div class="flex min-h-[34rem] items-center justify-center rounded-3xl bg-stone-100 p-3">
+				{#if coverUrl}
+					<img class="max-h-[34rem] max-w-full object-contain shadow-sm" src={coverUrl} alt={title} />
 				{:else}
-					<a
-						href={resolve('/my-books')}
-						class="mt-4 block rounded-2xl border border-dashed border-stone-300 px-4 py-3 text-center text-sm font-medium transition hover:border-brand hover:text-brand"
-					>
-						Create a shelf first
-					</a>
+					<div class="text-center text-sm text-stone-500">No cover available</div>
 				{/if}
 			</div>
 
-			<div class="mt-8 rounded-3xl bg-stone-50 p-6">
+			<div class="flex flex-col">
+				<p class="text-brand text-xs font-semibold uppercase tracking-[0.24em]">Book Details</p>
+				<h1 class="mt-2 text-4xl font-bold tracking-tight">{title}</h1>
+				<p class="mt-3 text-lg text-stone-600">{author}</p>
+
+				<div class="mt-6 rounded-3xl border border-brand/15 bg-brand-soft/60 p-6">
+					<h2 class="text-brand text-sm font-semibold uppercase tracking-[0.18em]">Add To Shelf</h2>
+					<p class="mt-2 text-sm text-stone-600">Choose a shelf to keep this book in your collection.</p>
+
+					{#if $bookshelf.shelves.length > 0}
+						<div class="mt-4 space-y-3">
+							<select
+								class="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none transition focus:border-brand"
+								bind:value={selectedShelfId}
+							>
+								{#each $bookshelf.shelves as shelf (shelf.id)}
+									<option value={shelf.id}>{shelf.name}</option>
+								{/each}
+							</select>
+
+							<button
+								type="button"
+								class={`w-full rounded-2xl border px-4 py-3 text-sm font-medium transition ${
+									selectedShelfContainsCurrentBook()
+										? 'border-brand bg-brand-soft text-brand-deep'
+										: 'border-brand bg-white text-brand hover:bg-brand-soft'
+								}`}
+								onclick={addCurrentBookToShelf}
+							>
+								{selectedShelfContainsCurrentBook() ? 'Added to shelf' : 'Add to shelf'}
+							</button>
+						</div>
+					{:else}
+						<a
+							href={resolve('/my-books')}
+							class="mt-4 block rounded-2xl border border-dashed border-stone-300 px-4 py-3 text-center text-sm font-medium transition hover:border-brand hover:text-brand"
+						>
+							Create a shelf first
+						</a>
+					{/if}
+				</div>
+
+			</div>
+
+			<div class="rounded-3xl bg-stone-50 p-6 lg:col-span-2">
 				<h2 class="text-sm font-semibold uppercase tracking-[0.18em] text-stone-500">Description</h2>
 				{#if isLoading}
 					<p class="mt-4 text-sm text-stone-600">Loading details...</p>
@@ -149,13 +163,6 @@
 					<p class="mt-4 leading-7 text-stone-700">{description}</p>
 				{/if}
 			</div>
-
-			<a
-				href={resolve('/')}
-				class="mt-6 inline-block rounded-2xl border border-stone-300 px-4 py-2 text-sm font-medium transition hover:border-brand hover:text-brand"
-			>
-				Back to search
-			</a>
 		</div>
 	</div>
 </div>
