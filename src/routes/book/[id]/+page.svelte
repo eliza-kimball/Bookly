@@ -103,9 +103,9 @@
 
 	<div class="mx-auto max-w-5xl rounded-3xl bg-white p-8 shadow-sm ring-1 ring-stone-200">
 		<div class="grid gap-8 lg:grid-cols-[420px_1fr]">
-			<div class="flex min-h-[34rem] items-center justify-center rounded-3xl bg-stone-100 p-3">
+			<div class="flex min-h-34rem items-center justify-center rounded-3xl bg-stone-100 p-3">
 				{#if coverUrl}
-					<img class="max-h-[34rem] max-w-full object-contain shadow-sm" src={coverUrl} alt={title} />
+					<img class="max-h-34rem max-w-full object-contain shadow-sm" src={coverUrl} alt={title} />
 				{:else}
 					<div class="text-center text-sm text-stone-500">No cover available</div>
 				{/if}
