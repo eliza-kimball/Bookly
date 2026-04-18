@@ -59,9 +59,7 @@
 		coverUrl = '';
 
 		try {
-			const response = await fetch(
-				`https://www.googleapis.com/books/v1/volumes/${encodeURIComponent(bookId)}`
-			);
+			const response = await fetch(`/api/books/details?id=${encodeURIComponent(bookId)}`);
 
 			if (!response.ok) {
 				throw new Error('Failed to load book');

@@ -49,9 +49,7 @@
 		error = '';
 
 		try {
-			const response = await fetch(
-				`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=12&printType=books`
-			);
+			const response = await fetch(`/api/books/search?q=${encodeURIComponent(query)}`);
 
 			if (!response.ok) {
 				throw new Error('Search failed');
