@@ -17,7 +17,7 @@
 
 <div class="min-h-screen overflow-x-hidden bg-stone-100 text-stone-900">
 	<div class="flex min-h-screen flex-col lg:flex-row">
-		<aside class="min-h-screen border-b border-stone-200 bg-white lg:w-72 lg:shrink-0 lg:self-stretch lg:border-b-0 lg:border-r">
+		<aside class="border-b border-stone-200 bg-white lg:min-h-screen lg:w-72 lg:shrink-0 lg:self-stretch lg:border-b-0 lg:border-r">
 			<div class="lg:sticky lg:top-0 lg:h-screen">
 				<div class="px-6 py-6">
 					<p class="text-brand text-xs font-semibold uppercase tracking-[0.28em]">Bookly</p>

@@ -52,7 +52,7 @@
 			const response = await fetch(`/api/books/search?q=${encodeURIComponent(query)}`);
 
 			if (!response.ok) {
-				throw new Error('Search failed');
+				throw new Error(response.status === 429 ? 'Rate limited' : 'Search failed');
 			}
 
 			const data = await response.json();
@@ -65,7 +65,7 @@
 				})
 			);
 		} catch {
-			error = 'Could not load books right now.';
+			error = 'Could not load books right now. If this is on Vercel, the Google Books request may be rate-limited.';
 			books = [];
 		} finally {
 			isLoading = false;
